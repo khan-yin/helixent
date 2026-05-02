@@ -34,3 +34,18 @@ export function moveCursorRight(state: InputEditorState): InputEditorState {
     cursorOffset: Math.min(state.text.length, state.cursorOffset + 1),
   };
 }
+
+export function moveCursorWordLeft(state: InputEditorState): InputEditorState {
+  let pos = state.cursorOffset;
+  while (pos > 0 && state.text[pos - 1] === " ") pos--;
+  while (pos > 0 && state.text[pos - 1] !== " ") pos--;
+  return { ...state, cursorOffset: pos };
+}
+
+export function moveCursorWordRight(state: InputEditorState): InputEditorState {
+  let pos = state.cursorOffset;
+  const len = state.text.length;
+  while (pos < len && state.text[pos] === " ") pos++;
+  while (pos < len && state.text[pos] !== " ") pos++;
+  return { ...state, cursorOffset: pos };
+}

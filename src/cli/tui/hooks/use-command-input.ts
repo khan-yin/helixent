@@ -14,6 +14,8 @@ import {
   insertTextAtCursor,
   moveCursorLeft,
   moveCursorRight,
+  moveCursorWordLeft,
+  moveCursorWordRight,
   removeCharacterBeforeCursor,
   type InputEditorState,
 } from "../input-editor";
@@ -129,13 +131,13 @@ export function useCommandInput({
         return;
       }
 
-      if (key.leftArrow) {
-        updateEditorState(moveCursorLeft(editorState));
+      if (key.leftArrow || (key.meta && input === "b")) {
+        updateEditorState(key.meta ? moveCursorWordLeft(editorState) : moveCursorLeft(editorState));
         return;
       }
 
-      if (key.rightArrow) {
-        updateEditorState(moveCursorRight(editorState));
+      if (key.rightArrow || (key.meta && input === "f")) {
+        updateEditorState(key.meta ? moveCursorWordRight(editorState) : moveCursorRight(editorState));
         return;
       }
 
